@@ -1,40 +1,14 @@
 import { Client } from "@notionhq/client"
 import { } from 'dotenv/config'
 
-const notionKey = process.env.NOTION_KEY
-const databaseId = process.env.NOTION_DATABASE_ID
-
-const notion = new Client({ auth: notionKey })
+const notion = new Client({ auth: process.env.NOTION_KEY })
 
 async function getDatabase() {
-  const response = await notion.databases.query({ database_id: databaseId });
+  const response = await notion.databases.query({ database_id: process.env.NOTION_DATABASE_ID });
   return response;
 };
 
-async function addItem(text) {
-  try {
-    const response = await notion.pages.create({
-      parent: { database_id: databaseId },
-      properties: {
-        title: {
-          title: [
-            {
-              "text": {
-                "content": text
-              }
-            }
-          ]
-        }
-      },
-    })
-    console.log(response)
-    console.log("Success! Entry added.")
-  } catch (error) {
-    console.error(error.body)
-  }
-}
-
-async function updateItem(pageID) {
+async function checkboxTurnedToOff(pageID) {
   try {
     const response = await notion.pages.update({
       page_id: pageID,
@@ -45,22 +19,23 @@ async function updateItem(pageID) {
       },
     })
     // console.log(response)
-    console.log("Success! Entry added.")
+    console.log("checkbox turned to off")
   } catch (error) {
     console.error(error.body)
   }
 }
 
+const notionDBObj = await getDatabase();//DB取得
+const notionDBElements = notionDBObj.results//取得したDBの要素部分
 
-const notionDBObj = await getDatabase();
-const elements = notionDBObj.results;
-let pageIds = []
-elements.forEach(ele => {
+let pageIds = []//DBの各要素のpageIdを格納 ↓3行で格納処理を行う。
+notionDBElements.forEach(ele => {
   pageIds.push(ele.id)
 });
-console.log(pageIds);
-for(let i=0;i<pageIds.length;i++){
-  await updateItem(pageIds[i])
+
+// 各々のpageId(DBの要素)のうち，チェックボックスがtrue(チェックあり)のもののみチェックを外す。
+for (let i = 0; i < pageIds.length; i++) {
+  if (notionDBElements[i].properties.DONE.checkbox) {
+    checkboxTurnedToOff(pageIds[i])
+  }
 }
-// addItem("Yurts in Big Sur, California")
-// updateItem()
