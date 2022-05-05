@@ -1,17 +1,18 @@
 import { Client } from "@notionhq/client"
-import {} from 'dotenv/config'
+import { } from 'dotenv/config'
 
-const notion = new Client({ auth: process.env.NOTION_KEY })
-
+const notionKey = process.env.NOTION_KEY
 const databaseId = process.env.NOTION_DATABASE_ID
+
+const notion = new Client({ auth: notionKey })
 
 async function addItem(text) {
   try {
     const response = await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
-        title: { 
-          title:[
+        title: {
+          title: [
             {
               "text": {
                 "content": text
