@@ -1,0 +1,10 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "katkatprog <katkatprog@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@notionhq/client": "^1.0.1"
+  } 
+}
