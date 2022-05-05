@@ -1,10 +1,12 @@
 {
   "name": "test",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "author": "katkatprog <katkatprog@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@notionhq/client": "^1.0.1"
-  } 
+    "@notionhq/client": "^1.0.1",
+    "dotenv": "^16.0.0"
+  }
 }
