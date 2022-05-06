@@ -1,9 +1,9 @@
-import { Client } from "@notionhq/client"
-import { } from 'dotenv/config'
-import cron from 'node-cron'
+const notionhq = require("@notionhq/client")
+require('dotenv/config')
+const cron = require('node-cron')
 
 // ---------------関数定義部分--------------
-const notion = new Client({ auth: process.env.NOTION_KEY })
+const notion = new notionhq.Client({ auth: process.env.NOTION_KEY })
 
 async function getDatabase() {
   const response = await notion.databases.query({ database_id: process.env.NOTION_DATABASE_ID });
