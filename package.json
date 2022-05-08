@@ -7,11 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "@notionhq/client": "^1.0.1",
-<<<<<<< HEAD
-    "dotenv": "^16.0.0",
     "node-cron": "^3.0.0",
-=======
     "dotenv": "^16.0.0"
->>>>>>> parent of 1f24610 (定期実行できるよう，node-cronモジュールを導入)
   }
 }
