@@ -1,6 +1,6 @@
 import { Client } from "@notionhq/client"
 import { } from 'dotenv/config'
-import cron from 'node-cron'
+// import cron from 'node-cron'
 
 // ---------------関数定義部分--------------
 const notion = new Client({ auth: process.env.NOTION_KEY })
