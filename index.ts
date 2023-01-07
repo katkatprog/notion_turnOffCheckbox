@@ -39,7 +39,7 @@ cron.schedule("0 0 0 * * *", async () => {
   const notionDBObj = await getDatabase(); //DB取得
   const notionDBElements = notionDBObj.results; //取得したDBの要素部分
 
-  let pageIds = []; //DBの各要素のpageIdを格納 ↓3行で格納処理を行う。
+  let pageIds: string[] = []; //DBの各要素のpageIdを格納 ↓3行で格納処理を行う。
   notionDBElements.forEach((ele) => {
     pageIds.push(ele.id);
   });
