@@ -37,6 +37,11 @@ async function checkboxTurnedToOff(pageID: string) {
 // 毎日00:00:00秒に実行する
 cron.schedule("0 0 0 * * *", async () => {
   const notionDBObj = await getDatabase(); //DB取得
+  if (!notionDBObj) {
+    console.log("DB取得に失敗しました。");
+    return;
+  }
+
   const notionDBElements = notionDBObj.results; //取得したDBの要素部分
 
   let pageIds: string[] = []; //DBの各要素のpageIdを格納 ↓3行で格納処理を行う。
