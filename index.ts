@@ -31,11 +31,9 @@ async function checkboxTurnedToOff(pageID: string) {
     console.error(error.body);
   }
 }
-// ---------------関数定義部分終了--------------
 
-// ---------------処理実行部分----------------
-// 毎日00:00:00秒に実行する
-cron.schedule("0 0 0 * * *", async () => {
+// 実行用の関数
+const main = async () => {
   const notionDBObj = await getDatabase(); //DB取得
   if (!notionDBObj) {
     console.log("DB取得に失敗しました。");
@@ -55,4 +53,10 @@ cron.schedule("0 0 0 * * *", async () => {
       checkboxTurnedToOff(pageIds[i]);
     }
   }
-});
+};
+
+// ---------------関数定義部分終了--------------
+
+// ---------------処理実行部分----------------
+// 毎日00:00:00秒に実行する
+cron.schedule("0 0 0 * * *", main);
