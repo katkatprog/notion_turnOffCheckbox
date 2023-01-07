@@ -1,7 +1,19 @@
 import { Client } from "@notionhq/client";
-import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
-import {} from "dotenv/config";
+import {
+  PageObjectResponse,
+  QueryDatabaseResponse,
+} from "@notionhq/client/build/src/api-endpoints";
+import "dotenv/config";
 import cron from "node-cron";
+
+// ---------------custom interface---------------
+interface PropertiesDONE {
+  properties: {
+    DONE: {
+      checkbox: boolean;
+    };
+  };
+}
 
 // ---------------関数定義部分--------------
 const notion = new Client({ auth: process.env.NOTION_KEY });
@@ -27,7 +39,7 @@ async function checkboxTurnedToOff(pageID: string) {
     });
     // console.log(response)
     console.log("checkbox turned to off");
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.body);
   }
 }
@@ -40,7 +52,14 @@ const main = async () => {
     return;
   }
 
-  const notionDBElements = notionDBObj.results; //取得したDBの要素部分
+  //取得したDBの要素部分
+  const notionDBElements = notionDBObj.results as (PageObjectResponse &
+    PropertiesDONE)[];
+  // デフォルトだと、notionDBElementsの型が (PageObjectResponse | PartialPageObjectResponse)[] のユニオン型になる
+  // そうなると、propertiesプロパティにアクセスしようとした際、PartialPageObjectResponseの方には存在しないので、コンパイルエラーになる。
+  // それを防ぐため、型アサーションでPageObjectResponseの配列に固定
+  // さらに、properties内のDONEプロパティにもアクセスしたい(これはPageObjectResponseに存在しない)ので、
+  // 自作interfaceであるPropertiesDONEをインターセクションし、型拡張している。
 
   let pageIds: string[] = []; //DBの各要素のpageIdを格納 ↓3行で格納処理を行う。
   notionDBElements.forEach((ele) => {
