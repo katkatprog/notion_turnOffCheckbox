@@ -6,9 +6,9 @@
   "author": "katkatprog <katkatprog@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@notionhq/client": "^1.0.1",
-    "node-cron": "^3.0.0",
-    "dotenv": "^16.0.0"
+    "@notionhq/client": "^2.2.3",
+    "dotenv": "^16.0.0",
+    "node-cron": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
